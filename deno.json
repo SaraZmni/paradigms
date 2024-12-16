@@ -1,0 +1,19 @@
+{
+  "tasks": {
+    "start": "deno run --allow-read src/main.ts",
+    "dev": "deno run --allow-read --watch -q src/main.ts",
+    "test": "deno test",
+    "compile": "deno compile --allow-read src/main.ts"
+  },
+  "fmt": {
+    "options": {
+      "lineWidth": 80,
+      "indentWidth": 2,
+      "singleQuote": true
+    }
+  },
+  "compilerOptions": {
+    "allowJs": true,
+    "strict": true
+  }
+}
