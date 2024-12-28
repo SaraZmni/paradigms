@@ -1,51 +1,46 @@
+// Define the Card type
 type Card = {
-  name:string;
-  winingNumbers:number[];
-  numbers:number[];
+  name: string;
+  winingNumbers: number[];
+  numbers: number[];
 }
 
-function solution() {
+export function parseLine(numStr: string): number[] {
+  const strArray = numStr.split(" ");
+  const result: number[] = [];
+    
+  for (const str of strArray) {
+    if (str === '') continue;
+    result.push(Number.parseInt(str));
+  }
+    
+  return result;
+}
+
+export function solution(): void {
   // Read file
   const file = Deno.readTextFileSync('./input');
-  const cards:Card[] = [];
+  const cards: Card[] = [];
 
-  // Parse the data
-  const lines = file.split('\n')
-  console.log(lines)
+  const lines = file.split('\n');
 
-  for(const line of lines){
+  for (const line of lines) {
     if (line === '') continue;
-    // const name = line.split(':')[0]
-    // const rest = line.split(':')[1]
-    const [name,rest] = line.split(':')
-    const [leftNums,rightNums] = rest.split('|')
-
-    let winingNumbersStr:string[] = leftNums.split(" ")
-    let winingNumbersInt:number[] = [];
-
-    for(const winNumberStr of winingNumbersStr){
-      if(winNumberStr === '') continue
-
-      winingNumbersInt.push(Number.parseInt(winNumberStr))
-    }
     
-    let numbersStr:string[] = rightNums.split(" ")
-    let numbersInt:number[] = [];
+    const [name, rest] = line.split(':');
+    const [leftNums, rightNums] = rest.split('|');
 
-    for(const numberStr of numbersStr){
-      if(numberStr === '') continue
-
-      numbersInt.push(Number.parseInt(numberStr))
-    }
+    const winingNumbers = parseLine(leftNums);
+    const numbers = parseLine(rightNums);
     
     cards.push({
       name,
-      winingNumbers:winingNumbersInt,
-      numbers:numbersInt
-    })
-    
- 
+      winingNumbers,
+      numbers
+    });
   }
+
+  console.log(cards);
 }
 
 solution();
