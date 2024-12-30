@@ -5,7 +5,7 @@ type Card = {
   numbers: number[];
 };
 
-export function parseLine(numStr: string): number[] {
+function parseLine(numStr: string): number[] {
   const strArray = numStr.split(" ");
   const result: number[] = [];
     
