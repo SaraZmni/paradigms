@@ -46,19 +46,19 @@ class Card {
 
 class File {
   #content: string | undefined;
-  
+
   constructor(private path: string) {}
-  
+
   get content() {
     if (this.#content == null) throw Error('Cannot return the content of file');
     return this.#content;
   }
-  
+
   get lines() {
     if (this.#content == null) throw Error('Cannot return the content of file');
-    return this.#content.split("\n").filter(Boolean);
+    return this.#content.split('\n').filter(Boolean);
   }
-  
+
   read() {
     this.#content = Deno.readTextFileSync(this.path);
   }
@@ -74,14 +74,14 @@ class PuzzleFile {
   }
 
   private parseLine(numStr: string): number[] {
-    const strArray = numStr.split(" ");
+    const strArray = numStr.split(' ');
     const result: number[] = [];
-    
+
     for (const str of strArray) {
       if (str === '') continue;
       result.push(Number.parseInt(str));
     }
-    
+
     return result;
   }
 
@@ -90,7 +90,7 @@ class PuzzleFile {
 
     for (const line of this.lines) {
       if (line === '') continue;
-      
+
       const [name, rest] = line.split(':');
       const [leftNums, rightNums] = rest.split('|');
 
@@ -111,7 +111,7 @@ class PuzzleFile {
 
 class Leaderboard {
   constructor(private hand: Hand) {}
-  
+
   print() {
     console.log(this.hand.getSumPoints());
   }

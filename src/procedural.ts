@@ -6,79 +6,76 @@ type Card = {
 };
 
 function parseLine(numStr: string): number[] {
-  const strArray = numStr.split(" ");
+  const strArray = numStr.split(' ');
   const result: number[] = [];
-    
+
   for (const str of strArray) {
     if (str === '') continue;
     result.push(Number.parseInt(str));
   }
-    
+
   return result;
 }
 
-function readFile(){
+function readFile() {
   return Deno.readTextFileSync('./input');
 }
 
-function parseData(file:string) {
- 
-    const cards: Card[] = [];
+function parseData(file: string) {
+  const cards: Card[] = [];
 
-    const lines = file.split('\n');
+  const lines = file.split('\n');
 
-    for (const line of lines) {
-      if (line === '') continue;
-      
-      const [name, rest] = line.split(':');
-      const [leftNums, rightNums] = rest.split('|');
+  for (const line of lines) {
+    if (line === '') continue;
 
-      const winingNumbers = parseLine(leftNums);
-      const numbers = parseLine(rightNums);
-      
-      cards.push({
-        name,
-        winingNumbers,
-        numbers
-      });
-    }
+    const [name, rest] = line.split(':');
+    const [leftNums, rightNums] = rest.split('|');
 
-  return cards
+    const winingNumbers = parseLine(leftNums);
+    const numbers = parseLine(rightNums);
+
+    cards.push({
+      name,
+      winingNumbers,
+      numbers,
+    });
+  }
+
+  return cards;
 }
 
-function calculatePoint(card:Card) {
+function calculatePoint(card: Card) {
   let cardPoint = 0;
   for (const num of card.numbers) {
     if (card.winingNumbers.includes(num)) {
       if (cardPoint === 0) cardPoint = 1;
       else cardPoint *= 2;
     }
-  } 
-  return cardPoint
+  }
+  return cardPoint;
 }
 
-function calculateSum(cards:Card[]) {
+function calculateSum(cards: Card[]) {
   let sumPoints = 0;
 
-    for (const card of cards) {
-     let cardPoint = calculatePoint(card)   
-        sumPoints += cardPoint; 
-    }
-  return sumPoints
+  for (const card of cards) {
+    let cardPoint = calculatePoint(card);
+    sumPoints += cardPoint;
+  }
+  return sumPoints;
 }
 
-function print(sumPoints:number){
-  console.log(sumPoints)
+function print(sumPoints: number) {
+  console.log(sumPoints);
 }
 
 export function solution(): void {
   try {
-   
-    const file = readFile()
-    let cards = parseData(file)    
-    let sumPoints = calculateSum(cards)
-    print(sumPoints)
-    
+    const file = readFile();
+    let cards = parseData(file);
+    let sumPoints = calculateSum(cards);
+    print(sumPoints);
   } catch (error) {
     console.error('Error:', error);
   }
