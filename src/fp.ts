@@ -33,22 +33,23 @@ const toCard = (str: string): Card => {
   return { name, winingNumbers, numbers };
 };
 
+const getPoint = (card: Card): number => {
+  let cardPoint = 0;
+  for (const num of card.numbers) {
+    if (card.winingNumbers.includes(num)) {
+      if (cardPoint === 0) cardPoint = 1;
+      else cardPoint *= 2;
+    }
+  }
+  return cardPoint;
+};
+
 function solution() {
-  const file = readFile('./input');
-  const lines = getLines(file);
+  const lines = getLines(readFile('./input'));
   const linesWithoutEmptySpace = filterEmptyStrings(lines);
   const cards: Card[] = linesWithoutEmptySpace.map((line) => toCard(line));
 
-  const points = cards.map((card) => {
-    let cardPoint = 0;
-    for (const num of card.numbers) {
-      if (card.winingNumbers.includes(num)) {
-        if (cardPoint === 0) cardPoint = 1;
-        else cardPoint *= 2;
-      }
-    }
-    return cardPoint;
-  });
+  const points = cards.map((card) => getPoint(card));
   const sum = points.reduce(add, 0);
   console.log(sum);
 }
