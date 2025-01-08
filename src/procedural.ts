@@ -60,7 +60,7 @@ function calculateSum(cards: Card[]) {
   let sumPoints = 0;
 
   for (const card of cards) {
-    let cardPoint = calculatePoint(card);
+    const cardPoint = calculatePoint(card);
     sumPoints += cardPoint;
   }
   return sumPoints;
@@ -73,8 +73,8 @@ function print(sumPoints: number) {
 export function solution(): void {
   try {
     const file = readFile();
-    let cards = parseData(file);
-    let sumPoints = calculateSum(cards);
+    const cards = parseData(file);
+    const sumPoints = calculateSum(cards);
     print(sumPoints);
   } catch (error) {
     console.error('Error:', error);
